@@ -5,11 +5,9 @@ import java.util.Scanner;
 public class UserInterface {
 
     private final Scanner uiScan;
-    private final NumberAnalyzer numberAnalyzer;
 
     public UserInterface() {
         this.uiScan = new Scanner(System.in);
-        this.numberAnalyzer = new NumberAnalyzer();
     }
 
     public void run() {
@@ -24,7 +22,7 @@ public class UserInterface {
                 return;
             }
 
-            numberAnalyzer.numberProperties(userNumber, userNumberString);
+            NumberAnalyzer.numberProperties(userNumber, userNumberString);
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid input: " + userNumberString + " is not a natural number!");

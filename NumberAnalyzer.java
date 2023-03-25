@@ -2,6 +2,10 @@ package numbers;
 
 public class NumberAnalyzer {
 
+    private NumberAnalyzer() {
+
+    }
+
     private static boolean isEven(int number) { return number % 2 ==0; }
 
     private static boolean isBuzzNumber(int number) {
