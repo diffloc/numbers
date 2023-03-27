@@ -81,13 +81,13 @@ public class UserInterface {
                 }
 
                 if (propertyOneError && propertyTwoError) {
-                    System.out.println("the properties [" + (String.join(", ", errorParts)) + "] are wrong");
+                    System.out.println("The properties [" + (String.join(", ", errorParts)) + "] are wrong");
                     System.out.println(AVAILABLE_PROPS);
                     continue;
                 }
 
                 if (propertyOneError || propertyTwoError) {
-                    System.out.println("the property [" + (String.join(", ", errorParts)) + "] is wrong");
+                    System.out.println("The property [" + (String.join(", ", errorParts)) + "] is wrong");
                     System.out.println(AVAILABLE_PROPS);
                     continue;
                 }
