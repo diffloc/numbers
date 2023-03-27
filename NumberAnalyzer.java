@@ -46,11 +46,19 @@ public class NumberAnalyzer {
         return sum == product;
     }
 
-    public static void numberProperties(long number, int howMany, Property property) {
+    public static boolean isPerfectSquare(long number) {
+        return number == (long) Math.sqrt(number) * Math.sqrt(number);
+    }
+
+    public static boolean isSunny(long number) {
+        return isPerfectSquare(number +1);
+    }
+
+    public static void numberProperties(long number, int howMany, Property propertyOne, Property propertyTwo) {
         if (howMany == 0) {
             singleNumberProps(number);
-        } else if (property != null) {
-            findNumberProps(number, howMany, property);
+        } else if (propertyOne != null) {
+            findNumberProps(number, howMany, propertyOne, propertyTwo);
         } else {
             rangeNumberProps(number, howMany);
         }
@@ -63,67 +71,205 @@ public class NumberAnalyzer {
         System.out.println(" palindromic: " + isPalindromic(number));
         System.out.println("\t  gapful: " + isGapful(number));
         System.out.println("\t\t spy: " + isSpy(number));
+        System.out.println("\t  square: " + isPerfectSquare(number));
+        System.out.println("\t   sunny: " + isSunny(number));
         System.out.println("\t\teven: " + isEven(number));
         System.out.println("\t\t odd: " + !isEven(number));
     }
 
-    public static void findNumberProps(long number, int howMany, Property property) {
+    // public static void findNumberProps(long number, int howMany, Property property) {
+    //     int count = 0;
+    //     long iteration = number;
+    //     while (count < howMany) {
+    //         switch (property) {
+    //             case BUZZ:
+    //                 if (isBuzzNumber(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case DUCK:
+    //                 if (isDuckNumber(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case PALINDROMIC:
+    //                 if (isPalindromic(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case GAPFUL:
+    //                 if (isGapful(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case SPY:
+    //                 if (isSpy(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case SQUARE:
+    //                 if (isPerfectSquare(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case SUNNY:
+    //                 if (isSunny(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case EVEN:
+    //                 if (isEven(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             case ODD:
+    //                 if (!isEven(iteration)) {
+    //                     rangeNumberProps(iteration, 1);
+    //                     count++;
+    //                 }
+    //                 iteration++;
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    // }
+
+    public static void findNumberProps(long number, int howMany, Property propertyOne, Property propertyTwo ) {
         int count = 0;
         long iteration = number;
         while (count < howMany) {
-            switch (property) {
-                case BUZZ:
-                    if (isBuzzNumber(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                case DUCK:
-                    if (isDuckNumber(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                case PALINDROMIC:
-                    if (isPalindromic(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                case GAPFUL:
-                    if (isGapful(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                case SPY:
-                    if (isSpy(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                case EVEN:
-                    if (isEven(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                case ODD:
-                    if (!isEven(iteration)) {
-                        rangeNumberProps(iteration, 1);
-                        count++;
-                    }
-                    iteration++;
-                    break;
-                default:
-                    break;
+            boolean propertyOneSatisfied = false;
+            boolean propertyTwoSatisfied = false;
+            if (propertyOne != null) {
+                switch (propertyOne) {
+                    case BUZZ:
+                        if (isBuzzNumber(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case DUCK:
+                        if (isDuckNumber(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case PALINDROMIC:
+                        if (isPalindromic(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case GAPFUL:
+                        if (isGapful(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case SPY:
+                        if (isSpy(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case SQUARE:
+                        if (isPerfectSquare(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case SUNNY:
+                        if (isSunny(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case EVEN:
+                        if (isEven(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    case ODD:
+                        if (!isEven(iteration)) {
+                            propertyOneSatisfied = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
+
+            if (propertyTwo != null) {
+                switch (propertyTwo) {
+                    case BUZZ:
+                        if (isBuzzNumber(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case DUCK:
+                        if (isDuckNumber(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case PALINDROMIC:
+                        if (isPalindromic(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case GAPFUL:
+                        if (isGapful(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case SPY:
+                        if (isSpy(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case SQUARE:
+                        if (isPerfectSquare(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case SUNNY:
+                        if (isSunny(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+                        break;
+                    case EVEN:
+                        if (isEven(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+
+                        break;
+                    case ODD:
+                        if (!isEven(iteration)) {
+                            propertyTwoSatisfied = true;
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (propertyTwo == null && propertyOneSatisfied) {
+                rangeNumberProps(iteration, 1);
+                count++;
+            } else if (propertyOneSatisfied && propertyTwoSatisfied) {
+                rangeNumberProps(iteration, 1);
+                count++;
+            }
+            iteration++;
         }
     }
 
@@ -146,6 +292,12 @@ public class NumberAnalyzer {
             }
             if (isSpy(curNumber)) {
                 numberTests.add("spy");
+            }
+            if (isPerfectSquare(curNumber)) {
+                numberTests.add("square");
+            }
+            if (isSunny(curNumber)) {
+                numberTests.add("sunny");
             }
             if (isEven(curNumber)) {
                 numberTests.add("even");

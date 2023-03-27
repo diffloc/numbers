@@ -1,5 +1,6 @@
 package numbers;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -10,8 +11,8 @@ public class UserInterface {
             + "- enter a natural number to know its properties;\n"
             + "- enter two natural numbers to obtain the properties of the list:\n"
             + "  * the first parameter represents a starting number;\n"
-            + "  * the second parameter shows how many consecutive numbers are to be processed;\n"
-            + "- two natural numbers and a property to search for;\n"
+            + "  * the second parameters show how many consecutive numbers are to be processed;\n"
+            + "- two natural numbers and two properties to search for;\n"
             + "- separate the parameters with one space;\n"
             + "- enter 0 to exit.");
     static final String END_MSG = ("\nGoodbye!");
@@ -20,7 +21,7 @@ public class UserInterface {
     static final String INVALID_FIRST = ("\nThe first parameter should be a natural number or zero.");
     static final String INVALID_SECOND = ("\nThe second parameter should be a natural number.");
 
-    static final String INVALID_PROP = ("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+    static final String AVAILABLE_PROPS = ("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SQUARE, SUNNY]");
 
     public UserInterface() {
 
@@ -42,7 +43,8 @@ public class UserInterface {
             String[] parts = userInput.split(" ");
             long userNumber;
             int howMany = 0;
-            Property property = null;
+            Property propertyOne = null;
+            Property propertyTwo = null;
 
             try {
                 userNumber = Long.parseLong(parts[0]);
@@ -55,14 +57,51 @@ public class UserInterface {
                     continue;
                 }
 
-                if (parts.length > 2) {
+                ArrayList<String> errorParts = new ArrayList<>();
+                boolean propertyTwoError = false;
+                boolean propertyOneError = false;
+                if (parts.length > 3) {
+
                     try {
-                        property = Property.valueOf(parts[2].toUpperCase());
+                        propertyTwo = Property.valueOf(parts[3].toUpperCase());
                     } catch (IllegalArgumentException e) {
-                        System.out.println("The property [" + parts[2].toUpperCase() + "] is wrong.");
-                        System.out.println(INVALID_PROP);
-                        continue;
+                        propertyTwoError = true;
+                        errorParts.add(parts[3].toUpperCase());
                     }
+                }
+
+                if (parts.length > 2) {
+
+                    try {
+                        propertyOne = Property.valueOf(parts[2].toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        propertyOneError = true;
+                        errorParts.add(0, parts[2].toUpperCase());
+                    }
+                }
+
+                if (propertyOneError && propertyTwoError) {
+                    System.out.println("the properties [" + (String.join(", ", errorParts)) + "] are wrong");
+                    System.out.println(AVAILABLE_PROPS);
+                    continue;
+                }
+
+                if (propertyOneError || propertyTwoError) {
+                    System.out.println("the property [" + (String.join(", ", errorParts)) + "] is wrong");
+                    System.out.println(AVAILABLE_PROPS);
+                    continue;
+                }
+
+
+                if (propertyOne == Property.ODD && propertyTwo == Property.EVEN
+                        || propertyOne == Property.EVEN && propertyTwo == Property.ODD
+                        || propertyOne == Property.SUNNY && propertyTwo == Property.SQUARE
+                        || propertyOne == Property.SQUARE && propertyTwo == Property.SUNNY
+                        || propertyOne == Property.SPY && propertyTwo == Property.DUCK
+                        || propertyOne == Property.DUCK && propertyTwo == Property.SPY) {
+                    System.out.println("The request contains mutually exclusive properties: [" + propertyOne + ", " + propertyTwo + "]");
+                    System.out.println("There are no numbers with these properties.");
+                    continue;
                 }
 
                 if (parts.length > 1) {
@@ -82,7 +121,7 @@ public class UserInterface {
                 System.out.println(INVALID_FIRST);
                 continue;
             }
-            NumberAnalyzer.numberProperties(userNumber, howMany, property);
+            NumberAnalyzer.numberProperties(userNumber, howMany, propertyOne, propertyTwo);
         }
 
     }
