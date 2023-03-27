@@ -24,7 +24,6 @@ public class UserInterface {
     static final String AVAILABLE_PROPS = ("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SQUARE, SUNNY]");
 
     public UserInterface() {
-
         this.uiScan = new Scanner(System.in);
     }
 
