@@ -5,5 +5,9 @@ public class Main {
         // write your code here
         UserInterface ui = new UserInterface();
         ui.run();
+
+        // TODO: Use enum for properties
+
+
     }
 }

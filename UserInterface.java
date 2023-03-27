@@ -1,6 +1,5 @@
 package numbers;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -12,6 +11,7 @@ public class UserInterface {
             + "- enter two natural numbers to obtain the properties of the list:\n"
             + "  * the first parameter represents a starting number;\n"
             + "  * the second parameter shows how many consecutive numbers are to be processed;\n"
+            + "- two natural numbers and a property to search for;\n"
             + "- separate the parameters with one space;\n"
             + "- enter 0 to exit.");
     static final String END_MSG = ("\nGoodbye!");
@@ -19,6 +19,8 @@ public class UserInterface {
     static final String PROMPT = ("\nEnter a request: ");
     static final String INVALID_FIRST = ("\nThe first parameter should be a natural number or zero.");
     static final String INVALID_SECOND = ("\nThe second parameter should be a natural number.");
+
+    static final String INVALID_PROP = ("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
 
     public UserInterface() {
 
@@ -39,7 +41,8 @@ public class UserInterface {
 
             String[] parts = userInput.split(" ");
             long userNumber;
-            int userParam = 0;
+            int howMany = 0;
+            Property property = null;
 
             try {
                 userNumber = Long.parseLong(parts[0]);
@@ -52,25 +55,34 @@ public class UserInterface {
                     continue;
                 }
 
-                try {
-                    if (parts.length > 1) {
-                        userParam = Integer.parseInt(parts[1]);
+                if (parts.length > 2) {
+                    try {
+                        property = Property.valueOf(parts[2].toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("The property [" + parts[2].toUpperCase() + "] is wrong.");
+                        System.out.println(INVALID_PROP);
+                        continue;
                     }
-                    if (userParam < 0) {
+                }
+
+                if (parts.length > 1) {
+                    try {
+                        howMany = Integer.parseInt(parts[1]);
+                        if (howMany < 0) {
+                            System.out.println(INVALID_SECOND);
+                            continue;
+                        }
+                    } catch (NumberFormatException e) {
                         System.out.println(INVALID_SECOND);
                         continue;
                     }
-
-                } catch (NumberFormatException e) {
-                    System.out.println(INVALID_SECOND);
-                    continue;
                 }
 
             } catch (NumberFormatException e) {
                 System.out.println(INVALID_FIRST);
                 continue;
             }
-            NumberAnalyzer.numberProperties(userNumber, userParam);
+            NumberAnalyzer.numberProperties(userNumber, howMany, property);
         }
 
     }
