@@ -6,8 +6,11 @@ public class Main {
         UserInterface ui = new UserInterface();
         ui.run();
 
-        // TODO: Use enum for properties
-
-
+        // TODO:
+        //  [x] Use enum for properties
+        //  [ ] Move number tests to enum
+        //  [ ] Decompose NumberAnalytics
+        //  -- [ ] Extend super or each number test
+        //  -- [ ] separate analytics and logic packages
     }
 }

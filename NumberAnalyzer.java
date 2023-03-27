@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class NumberAnalyzer {
 
     private NumberAnalyzer() {
-
     }
 
     private static boolean isEven(long number) {
@@ -17,7 +16,6 @@ public class NumberAnalyzer {
     }
 
     private static boolean isDuckNumber(long number) {
-
         return String.valueOf(number).indexOf("0") > 0;
     }
 
@@ -158,6 +156,4 @@ public class NumberAnalyzer {
             System.out.println("\t\t\t " + curNumber + " is " + String.join(", ", numberTests));
         }
     }
-
-
 }
