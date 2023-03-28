@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
-
     private final Scanner uiScan;
     static final String BEGIN_MSG = ("Welcome to Amazing Numbers!");
     static final String INSTRUCTIONS = ("\nSupported requests:\n"
@@ -20,9 +19,7 @@ public class UserInterface {
     static final String PROMPT = ("\nEnter a request: ");
     static final String INVALID_FIRST = ("\nThe first parameter should be a natural number or zero.");
     static final String INVALID_SECOND = ("\nThe second parameter should be a natural number.");
-
     static final String AVAILABLE_PROPS = ("Available properties: " + getAvailableProperties());
-
     public UserInterface() {
         this.uiScan = new Scanner(System.in);
     }
@@ -55,9 +52,6 @@ public class UserInterface {
             String[] parts = userInput.split(" ");
             long userNumber;
             int howMany = 0;
-            // Property propertyOne = null;
-            // Property propertyTwo = null;
-
 
             try {
                 userNumber = Long.parseLong(parts[0]);
@@ -88,10 +82,6 @@ public class UserInterface {
                 continue;
             }
 
-            // NumberAnalyzer.numberProperties(userNumber, howMany, propertyOne, propertyTwo);
-
-
-
             ArrayList<String> errorParts = new ArrayList<>();
             if (parts.length > 2) {
                 Property[] properties = new Property[parts.length - 2];
@@ -116,8 +106,6 @@ public class UserInterface {
             } else {
                 NumberAnalyzer.numberProperties(userNumber, howMany);
             }
-
         }
-
     }
 }

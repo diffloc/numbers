@@ -50,7 +50,6 @@ public class NumberAnalyzer {
             }
         }
 
-
         if (!excludeProp.isEmpty()) {
             System.out.println("The request contains mutually exclusive properties: " + excludeProp);
             System.out.println("There are no numbers with these properties.");
