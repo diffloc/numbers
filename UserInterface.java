@@ -11,8 +11,8 @@ public class UserInterface {
             + "- enter a natural number to know its properties;\n"
             + "- enter two natural numbers to obtain the properties of the list:\n"
             + "  * the first parameter represents a starting number;\n"
-            + "  * the second parameters show how many consecutive numbers are to be processed;\n"
-            + "- two natural numbers and two properties to search for;\n"
+            + "  * the second parameter shows how many consecutive numbers are to be printed;\n"
+            + "- two natural numbers and properties to search for;\n"
             + "- separate the parameters with one space;\n"
             + "- enter 0 to exit.");
     static final String END_MSG = ("\nGoodbye!");
@@ -21,10 +21,22 @@ public class UserInterface {
     static final String INVALID_FIRST = ("\nThe first parameter should be a natural number or zero.");
     static final String INVALID_SECOND = ("\nThe second parameter should be a natural number.");
 
-    static final String AVAILABLE_PROPS = ("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SQUARE, SUNNY]");
+    static final String AVAILABLE_PROPS = ("Available properties: " + getAvailableProperties());
 
     public UserInterface() {
         this.uiScan = new Scanner(System.in);
+    }
+
+    public static String getAvailableProperties() {
+        StringBuilder sb = new StringBuilder();
+        Property[] properties = Property.values();
+        for (int i = 0; i < properties.length; i++) {
+            sb.append(properties[i]);
+            if (i < properties.length - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 
     public void run() {
@@ -34,6 +46,7 @@ public class UserInterface {
         while (true) {
             System.out.print(PROMPT);
             String userInput = uiScan.nextLine();
+            System.out.println();
             if (userInput.isEmpty()) {
                 System.out.println(INSTRUCTIONS);
                 continue;
@@ -42,8 +55,9 @@ public class UserInterface {
             String[] parts = userInput.split(" ");
             long userNumber;
             int howMany = 0;
-            Property propertyOne = null;
-            Property propertyTwo = null;
+            // Property propertyOne = null;
+            // Property propertyTwo = null;
+
 
             try {
                 userNumber = Long.parseLong(parts[0]);
@@ -53,53 +67,6 @@ public class UserInterface {
                 }
                 if (userNumber < 0) {
                     System.out.println(INVALID_FIRST);
-                    continue;
-                }
-
-                ArrayList<String> errorParts = new ArrayList<>();
-                boolean propertyTwoError = false;
-                boolean propertyOneError = false;
-                if (parts.length > 3) {
-
-                    try {
-                        propertyTwo = Property.valueOf(parts[3].toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        propertyTwoError = true;
-                        errorParts.add(parts[3].toUpperCase());
-                    }
-                }
-
-                if (parts.length > 2) {
-
-                    try {
-                        propertyOne = Property.valueOf(parts[2].toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        propertyOneError = true;
-                        errorParts.add(0, parts[2].toUpperCase());
-                    }
-                }
-
-                if (propertyOneError && propertyTwoError) {
-                    System.out.println("The properties [" + (String.join(", ", errorParts)) + "] are wrong");
-                    System.out.println(AVAILABLE_PROPS);
-                    continue;
-                }
-
-                if (propertyOneError || propertyTwoError) {
-                    System.out.println("The property [" + (String.join(", ", errorParts)) + "] is wrong");
-                    System.out.println(AVAILABLE_PROPS);
-                    continue;
-                }
-
-
-                if (propertyOne == Property.ODD && propertyTwo == Property.EVEN
-                        || propertyOne == Property.EVEN && propertyTwo == Property.ODD
-                        || propertyOne == Property.SUNNY && propertyTwo == Property.SQUARE
-                        || propertyOne == Property.SQUARE && propertyTwo == Property.SUNNY
-                        || propertyOne == Property.SPY && propertyTwo == Property.DUCK
-                        || propertyOne == Property.DUCK && propertyTwo == Property.SPY) {
-                    System.out.println("The request contains mutually exclusive properties: [" + propertyOne + ", " + propertyTwo + "]");
-                    System.out.println("There are no numbers with these properties.");
                     continue;
                 }
 
@@ -120,7 +87,36 @@ public class UserInterface {
                 System.out.println(INVALID_FIRST);
                 continue;
             }
-            NumberAnalyzer.numberProperties(userNumber, howMany, propertyOne, propertyTwo);
+
+            // NumberAnalyzer.numberProperties(userNumber, howMany, propertyOne, propertyTwo);
+
+
+
+            ArrayList<String> errorParts = new ArrayList<>();
+            if (parts.length > 2) {
+                Property[] properties = new Property[parts.length - 2];
+                for (int i = 2; i < parts.length; i++) {
+                    try {
+                        properties[i - 2] = Property.valueOf(parts[i].toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        errorParts.add(parts[i].toUpperCase());
+                    }
+                }
+                if (!errorParts.isEmpty()) {
+
+                    if (errorParts.size() == 1) {
+                        System.out.println("The property [" + errorParts.get(0) + "] is wrong");
+                    } else {
+                        System.out.println("The properties [" + String.join(", ", errorParts) + "] are wrong");
+                    }
+                    System.out.println("Available properties: [" + getAvailableProperties() + "]");
+                    continue;
+                }
+                NumberAnalyzer.numberProperties(userNumber, howMany, properties);
+            } else {
+                NumberAnalyzer.numberProperties(userNumber, howMany);
+            }
+
         }
 
     }

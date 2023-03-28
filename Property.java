@@ -1,9 +1,5 @@
 package numbers;
 
-/*
-* Revisions:
-* 2303271400 - Moved number tests from NumberAnalyzer to Properties
-* */
 
 public enum Property {
     BUZZ {
@@ -73,6 +69,24 @@ public enum Property {
         @Override
         public  boolean test(long number) {
             return NumberTester.isPerfectSquare((number + 1));
+        }
+    },
+    JUMPING {
+        @Override
+        public  boolean test(long number) {
+            String numStr = String.valueOf(number);
+            int len = numStr.length();
+            if (len <= 1) {
+                return true;
+            }
+            for (int i = 0; i < len - 1; i++) {
+                int digit1 = Character.getNumericValue(numStr.charAt(i));
+                int digit2 = Character.getNumericValue(numStr.charAt(i+1));
+                if (Math.abs(digit1 - digit2) != 1) {
+                    return false;
+                }
+            }
+            return true;
         }
     };
 

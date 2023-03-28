@@ -38,5 +38,9 @@ public class NumberTester {
         return Property.SUNNY.test(number);
     }
 
+    public static boolean isJumping(long number) {
+        return Property.JUMPING.test(number);
+    }
+
 
 }
