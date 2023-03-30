@@ -1,6 +1,9 @@
 package numbers;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 public enum Property {
     BUZZ {
         @Override
@@ -88,7 +91,40 @@ public enum Property {
             }
             return true;
         }
+    },
+    HAPPY {
+        @Override
+        public  boolean test(long number) {
+            Set<Long> alreadySeen = new HashSet<>();
+            while (number != 1 && !alreadySeen.contains(number)) {
+                alreadySeen.add(number);
+                long sum = 0;
+                while (number > 0) {
+                    long lastDigit = number % 10;
+                    sum += Math.pow(lastDigit, 2);
+                    number /= 10;
+                }
+                number = sum;
+            }
+            return number == 1;
+        }
+    },
+    SAD {
+        @Override
+        public boolean test(long number) {
+            Set<Long> alreadySeen = new HashSet<>();
+            while (number != 1 && !alreadySeen.contains(number)) {
+                alreadySeen.add(number);
+                long sum = 0;
+                while (number > 0) {
+                    long lastDigit = number % 10;
+                    sum += Math.pow(lastDigit, 2);
+                    number /= 10;
+                }
+                number = sum;
+            }
+            return number != 1;
+        }
     };
-
     public abstract boolean test(long number);
 }

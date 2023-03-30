@@ -42,5 +42,13 @@ public class NumberTester {
         return Property.JUMPING.test(number);
     }
 
+    public static boolean isHappy(long number) {
+        return Property.HAPPY.test(number);
+    }
+
+    public static boolean isSad(long number) {
+        return Property.SAD.test(number);
+    }
+
 
 }
